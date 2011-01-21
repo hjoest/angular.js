@@ -1,24 +1,20 @@
-angular.service('myApplication', function($resource){
+BuzzController.$inject=['$resource'];
+function BuzzController($resource){
   this.Activity = $resource(
-      'https://www.googleapis.com/buzz/v1/activities/:userId/:visibility/:activityId/:comments',
+      'https://www.googleapis.com/buzz/v1/activities/:userId/@self/:activityId/:comments',
       {alt:'json', callback:'JSON_CALLBACK'},
       {
-        get:     {method:'JSON', params:{visibility:'@self'}},
-        replies: {method:'JSON', params:{visibility:'@self', comments:'@comments'}}
+        get:     {method:'JSON'},
+        replies: {method:'JSON', params:{comments:'@comments'}}
       });
-}, {inject:['$resource']});
-
-function BuzzController(){
-  this.$watch('$location.hashPath', this.userChange);
-}
-BuzzController.prototype = {
-  userChange: function(){
+  
+  this.userChange = function(){
     this.userId = this.$location.hashPath;
-    this.activities = this.Activity.get({userId:this.userId});
-  },
+    if (this.userId)
+      this.activities = this.Activity.get({userId:this.userId});
+  };
 
-  expandReplies: function(activity) {
-    var self = this;
+  this.expandReplies = function(activity) {
     if (activity.replies) {
       activity.replies.show = !activity.replies.show;
     } else {
@@ -26,7 +22,9 @@ BuzzController.prototype = {
         activity.replies.show = true;
       });
     }
-  }
+  };
+  
+  this.$watch('$location.hashPath', this.userChange);
 };
 
 angular.widget('my:expand', function(element){

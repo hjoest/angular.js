@@ -1,10 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML>
 <html xmlns:ng="http://angularjs.org">
   <head>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
-    <script type="text/javascript" src="http://angularjs.org/ng/js/angular-debug.js#autobind"></script>
+    <script type="text/javascript" src="../../lib/jquery/jquery-1.4.2.js"></script>
+    <script type="text/javascript" src="../../src/angular-bootstrap.js" ng:autobind></script>
     <script type="text/javascript" src="buzz.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://angularjs.org/ng/css/angular.css"/>
     <link rel="stylesheet" type="text/css" href="buzz.css"/>
   </head>
   <body ng:init="$window.$root = this" ng:controller="BuzzController">
@@ -15,9 +14,11 @@
       <input type="text" name="filterText"/>
     </span>
     <span>
-      user:
-      <input type="text" name="userId" ng:required/>
-      <button ng:click="$location.hashPath = userId">fetch</button>
+      <form ng:submit="$location.hashPath = userId">
+        user:
+        <input type="text" name="userId" ng:required/>
+        <button ng:click="$location.hashPath = userId">fetch</button>
+      </form>
     </span>
   </div>
   <ul>
@@ -25,7 +26,7 @@
       <h1>
         <img ng:src="{{item.actor.thumbnailUrl}}"/>
         <a href="{{item.actor.profileUrl}}">{{item.actor.name}}</a>
-        <a href="#" ng:click="expandReplies(item)">Replies: {{item.links.replies[0].count}}</a>
+        <a href="" ng:click="expandReplies(item)">Replies: {{item.links.replies[0].count}}</a>
       </h1>
       <div>
         {{item.object.content | html}}
