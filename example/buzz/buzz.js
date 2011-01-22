@@ -1,5 +1,8 @@
-BuzzController.$inject=['$resource'];
-function BuzzController($resource){
+BuzzController.$inject=['$resource', '$location'];
+function BuzzController($resource, $location){
+
+  this.$location = $location;
+
   this.Activity = $resource(
       'https://www.googleapis.com/buzz/v1/activities/:userId/@self/:activityId/:comments',
       {alt:'json', callback:'JSON_CALLBACK'},

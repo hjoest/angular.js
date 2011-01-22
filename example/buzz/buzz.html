@@ -14,10 +14,10 @@
       <input type="text" name="filterText"/>
     </span>
     <span>
-      <form ng:submit="$location.hashPath = userId">
+      <form ng:submit="$location.updateHash(userId)">
         user:
         <input type="text" name="userId" ng:required/>
-        <button ng:click="$location.hashPath = userId">fetch</button>
+        <button ng:click="$location.updateHash(userId)">fetch</button>
       </form>
     </span>
   </div>
